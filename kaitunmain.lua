@@ -1,16 +1,25 @@
-repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer
-local lp = game.Players.LocalPlayer
-if lp.PlayerGui:FindFirstChild("Main (minimal)") then
-    if lp.PlayerGui["Main (minimal)"]:FindFirstChild("ChooseTeam") then
-        if lp.PlayerGui:FindFirstChild("Main (minimal)").ChooseTeam.Visible then
-            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("SetTeam","Pirates")
-        end
-    end
+if not game:IsLoaded() then
+    game.IsLoaded:Wait()
 end
 
+repeat task.wait() until getgenv().Configs
 local CFG = getgenv().Configs
+local lp = game:GetService("Players").LocalPlayer
+
+-- Auto Join Team Logic
+task.spawn(function()
+    while true do
+        if not lp.Team or lp.Team.Name == "Neutral" then
+            pcall(function()
+                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("SetTeam","Pirates")
+            end)
+        else
+            break
+        end
+        task.wait(1)
+    end
+end)
 local ps = game:GetService("Players")
-local lp = ps.LocalPlayer
 local pi = game.PlaceId
 local ws = game:GetService("Workspace")
 local es = ws:WaitForChild("Enemies")
