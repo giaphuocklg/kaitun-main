@@ -1,3 +1,13 @@
+repeat task.wait() until game:IsLoaded() and game.Players.LocalPlayer
+local lp = game.Players.LocalPlayer
+if lp.PlayerGui:FindFirstChild("Main (minimal)") then
+    if lp.PlayerGui["Main (minimal)"]:FindFirstChild("ChooseTeam") then
+        if lp.PlayerGui:FindFirstChild("Main (minimal)").ChooseTeam.Visible then
+            game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer("SetTeam","Pirates")
+        end
+    end
+end
+
 local CFG = getgenv().Configs
 local ps = game:GetService("Players")
 local lp = ps.LocalPlayer
@@ -2278,6 +2288,13 @@ local function tp(RealTarget, d, D)
             end
         end
     end
+    -- Reset TP Mechanism (10s interval)
+    if not _G.LastTpReset or tick() - _G.LastTpReset > 10 then
+        _G.LastTpReset = tick()
+        local Offset = CFrame.new(math.random(-2, 2), 0, math.random(-2, 2))
+        RealTarget = RealTarget * Offset
+    end
+
     LastTPTime = tick()
     StopTP()
     local distance = (RealTarget.Position - hrp.Position).Magnitude
@@ -2294,12 +2311,6 @@ local function tp(RealTarget, d, D)
         if child:IsA("BasePart") and child.CanCollide then
             child.CanCollide = false
         end
-    end
-    -- Reset TP Mechanism (10s interval)
-    if not _G.LastTpReset or tick() - _G.LastTpReset > 10 then
-        _G.LastTpReset = tick()
-        local Offset = CFrame.new(math.random(-2, 2), 0, math.random(-2, 2))
-        RealTarget = RealTarget * Offset
     end
     
     local duration = distance / speed
