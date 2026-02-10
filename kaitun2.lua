@@ -243,7 +243,7 @@ UICorner.CornerRadius = UDim.new(0, 5)
 UICorner.Parent = MainDashboard
 
 local UIStroke = Instance.new("UIStroke")
-UIStroke.Color = Color3.fromRGB(255, 80, 80)
+UIStroke.Color = Color3.fromRGB(170, 85, 255)
 UIStroke.Thickness = 2.5
 UIStroke.Parent = MainDashboard
 
@@ -252,7 +252,7 @@ Divider1.Name = "Divider"
 Divider1.Parent = MainDashboard
 Divider1.Position = UDim2.new(0.15, 0, 0.15, 0)
 Divider1.Size = UDim2.new(0.7, 0, 0, 2)
-Divider1.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+Divider1.BackgroundColor3 = Color3.fromRGB(85, 170, 255)
 Divider1.BorderSizePixel = 0
 
 local Divider2 = Instance.new("Frame")
@@ -260,7 +260,7 @@ Divider2.Name = "Divider"
 Divider2.Parent = MainDashboard
 Divider2.Position = UDim2.new(0.1, 0, 0.75, 0)
 Divider2.Size = UDim2.new(0.8, 0, 0, 2)
-Divider2.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+Divider2.BackgroundColor3 = Color3.fromRGB(85, 170, 255)
 Divider2.BorderSizePixel = 0
 
 local TopTitle = Instance.new("TextLabel")
@@ -270,7 +270,7 @@ TopTitle.Position = UDim2.new(0.5, 0, 0.05, 0)
 TopTitle.AnchorPoint = Vector2.new(0.5, 0)
 TopTitle.Size = UDim2.new(0, 0, 0, 18)
 TopTitle.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-TopTitle.Text = "Lonely Stats Checker"
+TopTitle.Text = "Status Checker - Kemu Kaitun"
 TopTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
 TopTitle.TextSize = 16
 TopTitle.BackgroundTransparency = 1
@@ -436,7 +436,7 @@ StatusMain.Size = UDim2.new(1, 0, 1, 0)
 
 local StatusStroke = Instance.new("UIStroke")
 StatusStroke.Parent = StatusMain
-StatusStroke.Color = Color3.fromRGB(233, 80, 80)
+StatusStroke.Color = Color3.fromRGB(170, 85, 255)
 StatusStroke.Thickness = 2.5
 
 StatusItemLabel = Instance.new("TextLabel")
@@ -448,7 +448,7 @@ StatusItemLabel.Position = UDim2.new(0.5, 0, 0, 10)
 StatusItemLabel.Size = UDim2.new(0, 300, 0, 18)
 StatusItemLabel.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
 StatusItemLabel.Text = "Status: Initializing..."
-StatusItemLabel.TextColor3 = Color3.fromRGB(233, 80, 80)
+StatusItemLabel.TextColor3 = Color3.fromRGB(85, 170, 255)
 StatusItemLabel.TextSize = 16
 
 StatusFarmLabel = Instance.new("TextLabel")
@@ -460,7 +460,7 @@ StatusFarmLabel.Position = UDim2.new(0.5, 0, 0, 30)
 StatusFarmLabel.Size = UDim2.new(0, 300, 0, 18)
 StatusFarmLabel.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
 StatusFarmLabel.Text = "Status Farm: N/A"
-StatusFarmLabel.TextColor3 = Color3.fromRGB(233, 80, 80)
+StatusFarmLabel.TextColor3 = Color3.fromRGB(85, 170, 255)
 StatusFarmLabel.TextSize = 16
 
 -- // FLOATING TOGGLE BUTTON \\ --
