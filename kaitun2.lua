@@ -487,7 +487,7 @@ ToggleIcon.AnchorPoint = Vector2.new(0.5, 0.5)
 ToggleIcon.BackgroundTransparency = 1
 ToggleIcon.Position = UDim2.new(0.5, 0, 0.5, 0)
 ToggleIcon.Size = UDim2.new(0, 40, 0, 40)
-ToggleIcon.Image = "rbxassetid://112485471724320"
+ToggleIcon.Image = "rbxassetid://110581811862272"
 
 local ToggleButton = Instance.new("TextButton")
 ToggleButton.Parent = ToggleBtnFrame
