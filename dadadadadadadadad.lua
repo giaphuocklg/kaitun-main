@@ -422,7 +422,7 @@ StatusHolder.Parent = StatusGui
 StatusHolder.AnchorPoint = Vector2.new(0.5, 0.5)
 StatusHolder.BackgroundTransparency = 1
 StatusHolder.Position = UDim2.new(0.5, 0, 0.05, 0)
-StatusHolder.Size = UDim2.new(0, 320, 0, 68)
+StatusHolder.Size = UDim2.new(0, 320, 0, 88)
 
 local StatusMain = Instance.new("Frame")
 StatusMain.Name = "Main"
@@ -455,12 +455,24 @@ StatusFarmLabel.Name = "StatusFarm"
 StatusFarmLabel.Parent = StatusMain
 StatusFarmLabel.AnchorPoint = Vector2.new(0.5, 0)
 StatusFarmLabel.BackgroundTransparency = 1
-StatusFarmLabel.Position = UDim2.new(0.5, 0, 0, 30)
+StatusFarmLabel.Position = UDim2.new(0.5, 0, 0, 35)
 StatusFarmLabel.Size = UDim2.new(0, 300, 0, 18)
 StatusFarmLabel.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
 StatusFarmLabel.Text = "Status Farm: N/A"
 StatusFarmLabel.TextColor3 = Color3.fromRGB(0, 191, 255)
 StatusFarmLabel.TextSize = 16
+
+StatusMobLabel = Instance.new("TextLabel")
+StatusMobLabel.Name = "StatusMob"
+StatusMobLabel.Parent = StatusMain
+StatusMobLabel.AnchorPoint = Vector2.new(0.5, 0)
+StatusMobLabel.BackgroundTransparency = 1
+StatusMobLabel.Position = UDim2.new(0.5, 0, 0, 60)
+StatusMobLabel.Size = UDim2.new(0, 300, 0, 18)
+StatusMobLabel.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
+StatusMobLabel.Text = "Farm Mob: N/A"
+StatusMobLabel.TextColor3 = Color3.fromRGB(0, 191, 255)
+StatusMobLabel.TextSize = 16
 
 -- // TOGGLE BUTTON \\ --
 local ToggleGui = Instance.new("ScreenGui")
@@ -505,24 +517,32 @@ ToggleButton.MouseButton1Click:Connect(function()
     end
 end)
 
+function UpdateStatusItem(p)
+    StatusItemLabel.Text = "Status : " .. tostring(p)
+end
+
 function UpdateStatusAccount(p)
     StatusFarmLabel.Text = "Status Farm : " .. tostring(p)
 end
 
-function UpdateStatusItem(p)
-    StatusItemLabel.Text = "Status : " .. tostring(p)
+function UpdateStatusMob(p)
+    StatusMobLabel.Text = "Farm Mob : " .. tostring(p)
 end
 
 Stats = {
     Status = {
         SetTitle = function(self, text)
             StatusFarmLabel.Text = "Status Farm : " .. tostring(text)
+        end,
+        SetMob = function(self, text)
+            StatusMobLabel.Text = "Farm Mob : " .. tostring(text)
         end
     }
 }
 
 _G.UpdateStatusAccount = UpdateStatusAccount
 _G.UpdateStatusItem = UpdateStatusItem
+_G.UpdateStatusMob = UpdateStatusMob
 
 
 
@@ -537,6 +557,13 @@ end
 local Lvl = lp:WaitForChild("Data"):WaitForChild("Level")
 function CheckLevel2()
     local Lv = game:GetService("Players").LocalPlayer.Data.Level.Value
+    UpdateStatusItem("Farming")
+    UpdateStatusAccount("Auto Farm Level")
+    if SelectMonster ~= "" and SelectMonster ~= nil then
+        UpdateStatusMob(SelectMonster)
+    elseif Ms ~= "" and Ms ~= nil then
+        UpdateStatusMob(Ms)
+    end
     if Old_World then
         if game.Players.LocalPlayer.Data.Level.Value == 1 or game.Players.LocalPlayer.Data.Level.Value <= 9 or SelectMonster == "" then 
             Ms = "Bandit"
@@ -3236,8 +3263,9 @@ local function FarmLevel()
                                 repeat wait(.1)
                                     tp(v.HumanoidRootPart.CFrame*CFrame.new(0,-30,0),1.5)
                                     Ew()
-                                    UpdateStatusAccount("Attacking Dough King")
-                                    UpdateStatusItem("Quest: Get Mirror Fractal")
+                                    UpdateStatusItem("Farming")
+                                    UpdateStatusAccount("Quest: Get Mirror Fractal")
+                                    UpdateStatusMob("Dough King")
                                 until not v.Parent or v.Humanoid.Health <= 0
                                 for i,v in pairs(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")) do
                                     if v.Type == 'Material' then
@@ -3256,8 +3284,9 @@ local function FarmLevel()
                     if (lp.Character.HumanoidRootPart.Position-Vector3.new(-2286.684326171875, 146.5656280517578, -12226.8818359375)).Magnitude >= 1800 then
                         repeat wait()
                             tp(CFrame.new(-2286.684326171875, 146.5656280517578, -12226.8818359375),1.5)
-                            UpdateStatusAccount("Attacking Dough King")
-                            UpdateStatusItem("Quest: Get Mirror Fractal")
+                            UpdateStatusItem("Farming")
+                            UpdateStatusAccount("Quest: Get Mirror Fractal")
+                            UpdateStatusMob("Dough King")
                         until (lp.Character.HumanoidRootPart.Position-Vector3.new(-2286.684326171875, 146.5656280517578, -12226.8818359375)).Magnitude <= 3
                     elseif (lp.Character.HumanoidRootPart.Position-Vector3.new(-2286.684326171875, 146.5656280517578, -12226.8818359375)).Magnitude < 1800 then
                         Monster = nil
@@ -6399,7 +6428,8 @@ task.spawn(function()
                     if mt.CheckItem('Dark Fragment') >= 1 then
                 ]]
                 if mt.CheckItem('Bones') < 500 then
-                    UpdateStatusItem("Farm Material Bones " .. mt.CheckItem('Bones') .. "/500 ( Get Skull Guitar )")
+                    UpdateStatusItem("Farming")
+                    UpdateStatusAccount("Farm Material Bones " .. mt.CheckItem('Bones') .. "/500 ( Get Skull Guitar )")
                     if Three_World then
                         mt.FarmBone(false)
                     else
@@ -6667,7 +6697,8 @@ task.spawn(function()
             elseif Quest == "Cursed Dual Katana" then
                 if rt.Remotes.CommF_:InvokeServer("CDKQuest","OpenDoor") == 'opened' then
                     local CheckQuest = rt.Remotes.CommF_:InvokeServer("CDKQuest","Progress")
-                    UpdateStatusItem("CDK Quest: " .. tostring(CheckQuest))
+                    UpdateStatusItem("Farming")
+                    UpdateStatusAccount("CDK Quest: " .. tostring(CheckQuest))
                     if CheckQuest['Good'] == 0 or CheckQuest['Good'] == -3 then
                         CDK_Q_S_C = 3
                         if CheckQuest['Good'] == 0 then
