@@ -2748,6 +2748,7 @@ setmetatable(mt, {
             end
 elseif k == "BN" then
     return function(vName)
+        UpdateStatusMob(vName)
         pcall(function()
             local plr = game.Players.LocalPlayer
 
@@ -3055,7 +3056,8 @@ local function FarmLevel()
                             tp(v.HumanoidRootPart.CFrame*CFrame.new(0,-30,0),1.5)
                             
                             Ew()
-                            statusItemLabel.Text = " Attacking Cake Prince"
+                            UpdateStatusAccount("Attacking Cake Prince")
+                            UpdateStatusMob("Cake Prince")
                         until not v.Parent or v.Humanoid.Health <= 0 or not getgenv().AutoFarm
                     end
                 end
@@ -3068,7 +3070,8 @@ local function FarmLevel()
                             end
                             tp(v.HumanoidRootPart.CFrame*CFrame.new(0,-30,0),1.5)
                             Ew()
-                            statusItemLabel.Text = " Attacking Cake Prince"
+                            UpdateStatusAccount("Attacking Cake Prince")
+                            UpdateStatusMob("Cake Prince")
                         until not v.Parent or v.Humanoid.Health <= 0 or not getgenv().AutoFarm
                     end
                 end
@@ -3476,7 +3479,7 @@ local function FarmLevel()
                                 tp(v.HumanoidRootPart.CFrame*CFrame.new(0, 30, 0), 1.5)
                                 Ew()
                                 mt.BN(v.Name)
-                                statusItemLabel.Text = "Attack Mob : Shanda ( if Level < 70 ) " 
+                                UpdateStatusAccount("Attack Mob : Shanda ( if Level < 70 ) ") 
                             until not v.Parent or v.Humanoid.Health <= 0 or Level.Value >= 91 or not getgenv().AutoFarm or Quest ~= nil
                         end
                     end
