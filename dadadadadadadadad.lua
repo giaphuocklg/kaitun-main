@@ -522,6 +522,9 @@ function UpdateStatusItem(p)
 end
 
 function UpdateStatusAccount(p)
+    if StatusItemLabel.Text == "Status : Initializing..." or StatusItemLabel.Text == "Status: Initializing..." then
+        UpdateStatusItem("Farming")
+    end
     StatusFarmLabel.Text = "Status Farm : " .. tostring(p)
 end
 
@@ -532,10 +535,10 @@ end
 Stats = {
     Status = {
         SetTitle = function(self, text)
-            StatusFarmLabel.Text = "Status Farm : " .. tostring(text)
+            UpdateStatusAccount(text)
         end,
         SetMob = function(self, text)
-            StatusMobLabel.Text = "Farm Mob : " .. tostring(text)
+            UpdateStatusMob(text)
         end
     }
 }
@@ -559,11 +562,6 @@ function CheckLevel2()
     local Lv = game:GetService("Players").LocalPlayer.Data.Level.Value
     UpdateStatusItem("Farming")
     UpdateStatusAccount("Auto Farm Level")
-    if SelectMonster ~= "" and SelectMonster ~= nil then
-        UpdateStatusMob(SelectMonster)
-    elseif Ms ~= "" and Ms ~= nil then
-        UpdateStatusMob(Ms)
-    end
     if Old_World then
         if game.Players.LocalPlayer.Data.Level.Value == 1 or game.Players.LocalPlayer.Data.Level.Value <= 9 or SelectMonster == "" then 
             Ms = "Bandit"
@@ -1580,6 +1578,11 @@ function CheckLevel2()
             else
                 Cake_Prince_S:Set(' Cake Prince : '..Lp)
             end
+        end
+        if SelectMonster ~= "" and SelectMonster ~= nil then
+            UpdateStatusMob(SelectMonster)
+        elseif Ms ~= "" and Ms ~= nil then
+            UpdateStatusMob(Ms)
         end
     end
 end
@@ -2813,7 +2816,7 @@ elseif k == "BN" then
     end
         elseif k == "Status" then
             return function(p)
-                StatusFarmLabel.Text = "Status: " .. p
+                UpdateStatusAccount(p)
             end
         elseif k == "GetQuest" then
 	        return function(vu)
@@ -3079,7 +3082,7 @@ local function FarmLevel()
                 if not Q_Tushita['OpenedDoor'] then
                     if lp.Backpack:FindFirstChild("Holy Torch") or lp.Character:FindFirstChild("Holy Torch") then
                         mt.Equip("Holy Torch")
-                        StatusFarmLabel.Text = "Status: Get Tushita"
+                        UpdateStatusAccount("Quest: Get Tushita")
                         for i = 1, 5 do
                             rt.Remotes.CommF_:InvokeServer("TushitaProgress", "Torch", i)
                         end
@@ -3110,7 +3113,7 @@ local function FarmLevel()
                     end
                 elseif Q_Tushita['OpenedDoor'] then
                     Unlock_Tushita_Quest = true
-                    StatusFarmLabel.Text = "Status: Got"
+                    UpdateStatusAccount("Got Tushita")
                     return
                 end
             else
@@ -3360,7 +3363,7 @@ local function FarmLevel()
                     repeat mt.wt()
                         rt.Remotes.CommF_:InvokeServer("EliteHunter")
                         tp(v.HumanoidRootPart.CFrame * CFrame.new(0, 30, 0),1.5)
-                        StatusFarmLabel.Text = "Status: Attack Elite : "..Elite_Mon
+                        UpdateStatusAccount("Attack Elite : "..Elite_Mon)
                         if not mt.ffc(lp.Character, "HasBuso") then
                             lp.Character.HumanoidRootPart.Remotes.CommF_:InvokeServer("Buso")
                         end
